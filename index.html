@@ -43,7 +43,7 @@
   ────────────────────────────────────────────────────────────────────────── -->
   <script>
   window.VI2_CFG = {
-    GA4_ID:   '',   // TODO → replace with 'G-XXXXXXXXXX'
+    GA4_ID:   'G-VDB59DRE5L',
     PIXEL_ID: '',   // TODO → replace with '1234567890123456'
     GSC_CODE: '',   // TODO → replace with Google Search Console HTML tag content= value
   };
@@ -1083,6 +1083,64 @@ html,body{background:#020617!important;color:#eef7ff!important}
 #hero,#products,#solutions,#why,#industries,#pricing,#faq,#contact,section,main{background:transparent!important}
 .hero-inner *,.hero h1,.hero h2,.hero p,.hero-sub,.hero-eyebrow{color:#fff!important}
 h1,h2,h3{color:#fff!important}
+
+/* Fix all white cards / panels */
+.pplan,.pcard,.product-card,.industry-card,.fcard,.step,.tcard,
+.contact-form-card,.contact-info-item,.hero-prod-card,
+.stat-item,.trust-item,.metric-card,.faq-item,.demo-screen{
+  background:linear-gradient(180deg,rgba(15,23,42,.88),rgba(8,13,30,.80))!important;
+  border:1px solid rgba(125,211,252,.2)!important;
+  color:#eef7ff!important;
+}
+
+/* All text inside these cards visible */
+.pplan *,.pcard *,.product-card *,.industry-card *,.fcard *,
+.step *,.contact-form-card *,.contact-info-item *,.hero-prod-card *,
+.stat-item *,.tcard *,.demo-screen *{
+  color:#eef7ff!important;
+}
+
+/* Plan names and prices bright white */
+.plan-name,.plan-price,.plan-price sup{color:#fff!important}
+
+/* Muted sub-text */
+.plan-desc,.plan-price-sub{color:#91a7c7!important}
+
+/* Plan feature text */
+.plan-feature{color:#cbd5e1!important}
+
+/* Plan buttons */
+.plan-btn{
+  background:linear-gradient(135deg,#00e5ff,#60a5fa,#8b5cf6)!important;
+  color:#020617!important;
+  border:none!important;
+}
+.plan-btn-dark{
+  background:linear-gradient(135deg,#00e5ff,#60a5fa,#8b5cf6)!important;
+  color:#020617!important;
+}
+
+/* Solutions section cards */
+.solutions-grid > div, .sol-card, [class*="sol-"]{
+  background:linear-gradient(180deg,rgba(15,23,42,.88),rgba(8,13,30,.80))!important;
+  border:1px solid rgba(125,211,252,.2)!important;
+  border-radius:16px!important;
+}
+.sol-title{color:#fff!important;font-weight:700!important}
+.sol-desc,.sol-features li,.sol-features{color:#cbd5e1!important}
+.sol-icon,.sol-icon *{color:#a5f3fc!important}
+
+/* Catch-all: any remaining white backgrounds site-wide */
+div[style*="background:#fff"], div[style*="background: #fff"],
+div[style*="background:white"], div[style*="background: white"]{
+  background:linear-gradient(180deg,rgba(15,23,42,.88),rgba(8,13,30,.80))!important;
+  color:#eef7ff!important;
+}
+
+/* Nuclear option: force ALL text to be visible */
+body *:not(script):not(style):not(svg):not(path):not(circle):not(polygon):not(rect):not(line):not(polyline){
+  color:inherit;
+}
 </style>
 <style id="vi2ionai-neon-redesign">
 :root{--void:#020617;--void2:#050b1f;--panel:rgba(8,18,45,.72);--panel2:rgba(15,23,42,.82);--line:rgba(125,211,252,.2);--line2:rgba(255,255,255,.12);--text:#eef7ff;--muted:#91a7c7;--blue:#00e5ff;--blue2:#2563eb;--cyan:#67e8f9;--violet:#8b5cf6;--green:#22c55e;--pink:#ec4899;--radius:24px;--shadow:0 24px 80px rgba(0,0,0,.45);--glow:0 0 34px rgba(0,229,255,.32)}
