@@ -1,0 +1,37 @@
+# Environment & secrets — NEVER commit
+.env
+.env.local
+.env.php
+includes/.env.php
+includes/config.local.php
+
+# Uploads (don't track product images in git)
+uploads/*
+!uploads/.gitkeep
+
+# Runtime storage — flag files, never commit
+storage/*
+!storage/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Editor
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs
+*.log
+logs/
+
+# PHP cache
+/vendor/
+*.cache
+
+# Backup directory contents (tracked separately)
+backup/*.html
+backup/*.php

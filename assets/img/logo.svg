@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <!-- GPS pin icon -->
+  <circle cx="22" cy="22" r="22" fill="#0a0a0a"/>
+  <path d="M22 10C17 10 13 14 13 19c0 7 9 16 9 16s9-9 9-16c0-5-4-9-9-9z" fill="#fff"/>
+  <circle cx="22" cy="19" r="4" fill="#0a0a0a"/>
+  <!-- Wordmark -->
+  <text x="52" y="37" font-family="Arial,sans-serif" font-size="22" font-weight="900" fill="#0a0a0a" letter-spacing="-1">VI2IONAI</text>
+  <text x="53" y="52" font-family="Arial,sans-serif" font-size="10" font-weight="600" fill="#9ca3af" letter-spacing="2">FLEET</text>
+</svg>

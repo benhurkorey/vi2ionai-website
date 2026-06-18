@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Terms &amp; Conditions — Vi2ionai Fleet GPS Tracking</title>
+<meta name="description" content="Vi2ionai Fleet terms and conditions — hardware purchase, subscription, warranty and returns for Australian fleet GPS tracking customers." />
+<link rel="canonical" href="https://vi2ionai.com.au/terms.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%230a0a0a'/><path d='M16 6C12 6 9 9 9 13c0 7 7 15 7 15s7-8 7-15c0-4-3-7-7-7z' fill='%23fff'/><circle cx='16' cy='13' r='3.5' fill='%230a0a0a'/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 15px; }
+  body { font-family: 'Manrope', sans-serif; background: #fff; color: #0a0a0a; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: #0a0a0a; color: rgba(255,255,255,.65);
+    height: 36px; display: flex; align-items: center; justify-content: center;
+    font-size: .72rem; font-weight: 600; letter-spacing: .04em; gap: 20px;
+  }
+  .topbar a { color: rgba(255,255,255,.65); }
+  .topbar a:hover { color: #fff; }
+  .topbar .sep { opacity: .3; }
+
+  /* ── NAV ── */
+  nav {
+    background: #0a0a0a; position: sticky; top: 0; z-index: 200;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto; padding: 0 28px;
+    height: 64px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.2rem; font-weight: 800; color: #fff;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo-icon {
+    width: 28px; height: 28px; background: #fff; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo-icon svg { width: 14px; height: 14px; }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+  .nav-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: .82rem; font-weight: 600; color: rgba(255,255,255,.55);
+    border: 1.5px solid rgba(255,255,255,.2); border-radius: 8px; padding: 6px 14px;
+    transition: all .15s;
+  }
+  .nav-back:hover { color: #fff; border-color: rgba(255,255,255,.6); }
+  .nav-cta {
+    font-size: .82rem; font-weight: 700; color: #0a0a0a;
+    background: #fff; border-radius: 8px; padding: 7px 16px; transition: opacity .15s;
+  }
+  .nav-cta:hover { opacity: .85; }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    background: #0a0a0a; color: #fff; padding: 52px 28px 44px; text-align: center;
+  }
+  .page-hero .badge {
+    display: inline-block; background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2); border-radius: 100px;
+    padding: 5px 16px; font-size: .72rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; margin-bottom: 20px; color: rgba(255,255,255,.65);
+  }
+  .page-hero h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.2rem; font-weight: 800; margin-bottom: 10px;
+  }
+  .page-hero p { font-size: .88rem; color: rgba(255,255,255,.5); max-width: 480px; margin: 0 auto 14px; }
+  .page-hero .meta { font-size: .76rem; color: rgba(255,255,255,.3); }
+  @media (max-width: 600px) { .page-hero h1 { font-size: 1.6rem; } }
+
+  /* ── CONTENT ── */
+  .content-wrap { max-width: 860px; margin: 0 auto; padding: 52px 28px 80px; }
+
+  .doc-section { margin-bottom: 44px; }
+
+  .section-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.02rem; font-weight: 800; color: #0a0a0a;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 18px; padding-bottom: 12px;
+    border-bottom: 2px solid #f3f4f6;
+  }
+  .section-num {
+    width: 28px; height: 28px; background: #0a0a0a; color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: .72rem; font-weight: 800; flex-shrink: 0;
+  }
+
+  p.body { font-size: .9rem; color: #374151; margin-bottom: 14px; }
+  p.body-bold { font-size: .9rem; font-weight: 700; color: #0a0a0a; margin: 18px 0 8px; }
+
+  ol.doc-list { padding-left: 0; counter-reset: item; list-style: none; }
+  ol.doc-list li {
+    font-size: .88rem; color: #374151; padding: 7px 0 7px 28px;
+    position: relative; border-bottom: 1px solid #f3f4f6;
+    counter-increment: item;
+  }
+  ol.doc-list li:last-child { border-bottom: none; }
+  ol.doc-list li::before {
+    content: counter(item) ".";
+    position: absolute; left: 0;
+    font-size: .78rem; font-weight: 700; color: #9ca3af;
+  }
+
+  ul.doc-list {
+    padding-left: 0; list-style: none; margin: 8px 0 14px;
+  }
+  ul.doc-list li {
+    font-size: .88rem; color: #374151; padding: 6px 0 6px 22px;
+    position: relative; border-bottom: 1px solid #f3f4f6;
+  }
+  ul.doc-list li:last-child { border-bottom: none; }
+  ul.doc-list li::before { content: "→"; position: absolute; left: 0; color: #9ca3af; font-size: .78rem; }
+
+  .info-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; border-radius: 8px; overflow: hidden; border: 1px solid #e5e7eb; }
+  .info-table td { padding: 11px 16px; font-size: .87rem; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  .info-table tr:last-child td { border-bottom: none; }
+  .info-table td:first-child { font-weight: 700; background: #f9fafb; color: #0a0a0a; width: 180px; white-space: nowrap; }
+  .info-table td:last-child { color: #374151; }
+
+  .highlight-box {
+    background: #f9fafb; border: 1px solid #e5e7eb; border-left: 3px solid #0a0a0a;
+    border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0;
+    font-size: .87rem; color: #374151;
+  }
+  .highlight-box strong { display: block; font-weight: 700; color: #0a0a0a; margin-bottom: 4px; }
+
+  .divider { height: 1px; background: #f3f4f6; margin: 40px 0; }
+
+  .contact-strip {
+    background: #0a0a0a; color: #fff; border-radius: 12px;
+    padding: 24px 28px; display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 48px;
+    font-size: .87rem;
+  }
+  .contact-strip p { color: rgba(255,255,255,.65); }
+  .contact-strip a { color: #fff; font-weight: 600; }
+  .contact-strip a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0a0a0a; color: rgba(255,255,255,.4);
+    text-align: center; padding: 28px 24px; font-size: .78rem;
+  }
+  footer a { color: rgba(255,255,255,.5); margin: 0 10px; }
+  footer a:hover { color: rgba(255,255,255,.8); }
+  .footer-links { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <span>🇦🇺 Australian Fleet Technology</span>
+  <span class="sep">|</span>
+  <a href="tel:0422557927">0422 55 7927</a>
+  <span class="sep">|</span>
+  <a href="mailto:info@vi2ionai.com.au">info@vi2ionai.com.au</a>
+</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 1C5.24 1 3 3.24 3 6C3 9.5 8 15 8 15C8 15 13 9.5 13 6C13 3.24 10.76 1 8 1Z" fill="#0a0a0a"/>
+          <circle cx="8" cy="6" r="2" fill="white"/>
+        </svg>
+      </div>
+      Vi2ionai
+    </a>
+    <div class="nav-actions">
+      <a href="/" class="nav-back">← Back to Site</a>
+      <a href="/landing-page.php" class="nav-cta">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="page-hero">
+  <div class="badge">Legal</div>
+  <h1>Terms &amp; Conditions</h1>
+  <p>Hardware purchase, subscription, warranty and returns for Australian fleet customers.</p>
+  <div class="meta">Last updated: March 2026 &nbsp;·&nbsp; Vi2ionai Pty Ltd</div>
+</div>
+
+<!-- Content -->
+<div class="content-wrap">
+
+  <div class="doc-section">
+    <div class="section-title"><div class="section-num">1</div>What You Get</div>
+    <p class="body">When you purchase a Vi2ionai GPS tracking device, you receive:</p>
+    <table class="info-table">
+      <tr><td>Hardware</td><td>GPS tracking device(s) as selected at time of purchase</td></tr>
+      <tr><td>SIM Card</td><td>Included in the device — connects via Telstra 4G LTE network</td></tr>
+      <tr><td>Software Access</td><td>Access to the Vi2ionai fleet tracking platform</td></tr>
+      <tr><td>Features</td><td>Live tracking, trip history, geofencing, driver behaviour, alerts &amp; reports</td></tr>
+      <tr><td>Support</td><td>Email and phone support — Mon–Fri, 9 AM–5 PM AEST</td></tr>
+      <tr><td>Data Retention</td><td>Fleet data retained for a minimum of 6 months</td></tr>
+    </table>
+  </div>
+
+  <div class="doc-section">
+    <div class="section-title"><div class="section-num">2</div>Purchase &amp; Subscription</div>
+    <p class="body-bold">Hardware Purchase</p>
+    <ol class="doc-list">
+      <li>Hardware is purchased outright — you own the device once payment is received in full.</li>
+      <li>Prices are in Australian Dollars (AUD) inclusive of GST unless stated otherwise.</li>
+      <li>Payment must be made at the time of purchase via Stripe or PayPal.</li>
+      <li>A tax invoice will be issued upon receipt of payment.</li>
+    </ol>
+    <p class="body-bold">Monthly Subscription</p>
+    <ol class="doc-list">
+      <li>Use of the Vi2ionai platform and SIM data services requires an active monthly subscription.</li>
+      <li>The monthly fee covers SIM data charges and access to the Vi2ionai software platform.</li>
+      <li>Subscription fees are due and payable by the <strong>30th of each month</strong>.</li>
+      <li>There is <strong>no lock-in contract</strong>. You may cancel at any time with 30 days written notice to info@vi2ionai.com.au.</li>
+      <li>Access to the platform will cease at the end of the final paid month upon cancellation.</li>
+      <li>Vi2ionai may vary the monthly fee with 30 days written notice.</li>
+      <li>Failure to pay by the due date may result in suspension of platform access and SIM services.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <div class="section-title"><div class="section-num">3</div>Hardware Warranty</div>
+    <div class="highlight-box">
+      <strong>Australian Consumer Law</strong>
+      Our hardware comes with guarantees that cannot be excluded under the Australian Consumer Law.
+    </div>
+    <p class="body-bold">Manufacturing Defects</p>
+    <ol class="doc-list">
+      <li>Vi2ionai warrants hardware is free from manufacturing defects at the time of delivery.</li>
+      <li>Defects identified within <strong>12 months of purchase</strong> will be repaired or replaced at no cost.</li>
+      <li>To make a warranty claim, contact info@vi2ionai.com.au with proof of purchase.</li>
+      <li>Vi2ionai will assess the claim within 5 business days.</li>
+    </ol>
+    <p class="body-bold">What Is Not Covered</p>
+    <ul class="doc-list">
+      <li>Physical damage caused by the customer, drivers, or third parties</li>
+      <li>Damage from improper installation, tampering, or unauthorised modification</li>
+      <li>Loss or theft of the device</li>
+      <li>Water damage beyond the device's rated IP protection</li>
+      <li>Normal wear and tear</li>
+    </ul>
+  </div>
+
+  <div class="doc-section">
+    <div class="section-title"><div class="section-num">4</div>Returns &amp; Refunds</div>
+    <ol class="doc-list">
+      <li>Change of mind returns are accepted within <strong>30 days of purchase</strong>, provided the device is unused and in original packaging.</li>
+      <li>Return shipping costs for change of mind returns are the customer's responsibility.</li>
+      <li>Refunds will be processed within 5 business days of receiving the returned item.</li>
+      <li>Devices that have been installed, activated, or used are not eligible for change of mind returns.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <div class="section-title"><div class="section-num">5</div>Limitation of Liability</div>
+    <ol class="doc-list">
+      <li>To the extent permitted by law, Vi2ionai's liability is limited to the purchase price of the hardware.</li>
+      <li>Vi2ionai is not liable for any indirect, consequential, or economic loss.</li>
+      <li>Network coverage is dependent on Telstra's 4G LTE network.</li>
+      <li>Nothing in these terms excludes rights under the Australian Consumer Law.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <div class="section-title"><div class="section-num">6</div>Privacy</div>
+    <ol class="doc-list">
+      <li>Vi2ionai handles personal information in accordance with the Privacy Act 1988 (Cth) and the Australian Privacy Principles. See our <a href="/privacy.html" style="color:#0a0a0a;text-decoration:underline">Privacy Policy</a>.</li>
+      <li>Fleet tracking data is owned by the customer.</li>
+      <li>The customer is responsible for ensuring drivers consent to vehicle tracking.</li>
+    </ol>
+  </div>
+
+  <div class="doc-section">
+    <div class="section-title"><div class="section-num">7</div>General</div>
+    <ol class="doc-list">
+      <li>These terms are governed by the laws of New South Wales, Australia.</li>
+      <li>Vi2ionai may update these terms at any time. Continued use of our services constitutes acceptance.</li>
+    </ol>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="contact-strip">
+    <div>
+      <strong style="font-size:.92rem">Questions about these terms?</strong>
+      <p>We're happy to explain anything before you purchase.</p>
+    </div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:.85rem">
+      <a href="tel:0422557927">📞 0422 55 7927</a>
+      <a href="mailto:info@vi2ionai.com.au">✉️ info@vi2ionai.com.au</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/terms.html">Terms &amp; Conditions</a>
+    <a href="/privacy.html">Privacy Policy</a>
+  </div>
+  &copy; 2026 Vi2ionai Pty Ltd · All rights reserved
+</footer>
+
+</body>
+</html>

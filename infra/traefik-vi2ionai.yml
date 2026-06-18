@@ -1,0 +1,86 @@
+# Traefik file-based provider config for vi2ionai.com.au
+# Deploy to: /docker/n8n/traefik-config/vi2ionai.yml on VPS
+# Traefik watches this directory; no restart needed after placing file.
+#
+# Architecture:
+#   Internet → Traefik (80/443) → localhost:8082 (Nginx) → PHP-FPM → /var/www/vi2ionai/
+#
+# NOTE: LMS config (easylms.yml) is NOT touched by this file.
+
+http:
+  routers:
+    vi2ionai-http:
+      rule: "Host(`vi2ionai.com.au`) || Host(`www.vi2ionai.com.au`) || Host(`vi2ionai.com`) || Host(`www.vi2ionai.com`)"
+      entryPoints:
+        - web
+      middlewares:
+        - vi2ionai-https-redirect
+      service: vi2ionai
+
+    # www.vi2ionai.com.au → vi2ionai.com.au (own cert request so it doesn't batch with vi2ionai.com)
+    vi2ionai-www-au:
+      rule: "Host(`www.vi2ionai.com.au`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - vi2ionai-www-redirect
+      service: vi2ionai
+      tls:
+        certResolver: mytlschallenge
+        domains:
+          - main: www.vi2ionai.com.au
+
+    # www.vi2ionai.com → vi2ionai.com (separate cert; retries independently)
+    vi2ionai-www-com:
+      rule: "Host(`www.vi2ionai.com`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - vi2ionai-www-redirect
+      service: vi2ionai
+      tls:
+        certResolver: mytlschallenge
+        domains:
+          - main: www.vi2ionai.com
+
+    # Main HTTPS router — canonical domains only (each gets its own cert)
+    vi2ionai-https:
+      rule: "Host(`vi2ionai.com.au`)"
+      entryPoints:
+        - websecure
+      service: vi2ionai
+      tls:
+        certResolver: mytlschallenge
+        domains:
+          - main: vi2ionai.com.au
+
+    vi2ionai-com:
+      rule: "Host(`vi2ionai.com`)"
+      entryPoints:
+        - websecure
+      service: vi2ionai
+      tls:
+        certResolver: mytlschallenge
+        domains:
+          - main: vi2ionai.com
+
+  middlewares:
+    vi2ionai-https-redirect:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+    # www.vi2ionai.com.au → vi2ionai.com.au
+    # www.vi2ionai.com   → vi2ionai.com
+    vi2ionai-www-redirect:
+      redirectRegex:
+        regex: "^https://www\\.(.+)"
+        replacement: "https://${1}"
+        permanent: true
+
+  services:
+    vi2ionai:
+      loadBalancer:
+        servers:
+          - url: "http://172.17.0.1:8082"
+        passHostHeader: true

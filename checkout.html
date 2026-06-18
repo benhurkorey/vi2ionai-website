@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Checkout — Vi2ionai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%230a0a0a'/><path d='M16 6C12 6 9 9 9 13c0 7 7 15 7 15s7-8 7-15c0-4-3-7-7-7z' fill='%23fff'/><circle cx='16' cy='13' r='3.5' fill='%230a0a0a'/></svg>"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:15px;scroll-behavior:smooth;}
+body{font-family:'Manrope',sans-serif;background:#f8fafc;color:#1e293b;line-height:1.6;}
+a{text-decoration:none;color:#0a0a0a;}
+
+/* Nav */
+nav{background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;z-index:100;}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:10px;}
+.nav-logo-icon{width:28px;height:28px;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;}
+.nav-logo-icon svg{width:14px;height:14px;}
+.nav-back{font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.55);display:flex;align-items:center;gap:5px;border:1.5px solid rgba(255,255,255,0.2);border-radius:8px;padding:6px 14px;transition:all 0.15s;}
+.nav-back:hover{color:#fff;border-color:rgba(255,255,255,0.6);}
+.nav-demo{font-size:0.82rem;font-weight:700;color:#0a0a0a;background:#fff;padding:7px 16px;border-radius:8px;text-decoration:none;transition:background .15s;}
+.nav-demo:hover{background:#e5e7eb;}
+
+/* Steps */
+.steps-bar{background:#fff;border-bottom:1px solid #e2e8f0;}
+.steps-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:52px;display:flex;align-items:center;gap:0;}
+.step{display:flex;align-items:center;gap:8px;font-size:0.8rem;font-weight:600;color:#94a3b8;padding:0 20px 0 0;}
+.step.active{color:#0a0a0a;}
+.step.done{color:#22c55e;}
+.step-num{width:22px;height:22px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;}
+.step.done .step-num{background:#22c55e;border-color:#22c55e;color:#fff;}
+.step.active .step-num{background:#0a0a0a;border-color:#0a0a0a;color:#fff;}
+.step-sep{width:32px;height:1px;background:#e2e8f0;margin-right:20px;}
+
+/* Layout */
+.checkout-wrap{max-width:1100px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start;}
+@media(max-width:768px){.checkout-wrap{grid-template-columns:1fr;}.order-summary{order:-1;}}
+
+/* Cards */
+.card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;margin-bottom:16px;}
+.card-header{padding:18px 22px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:10px;}
+.card-header h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;color:#0f172a;}
+.card-num{width:26px;height:26px;border-radius:50%;background:#0a0a0a;color:#fff;font-size:0.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.card-body{padding:20px 22px;}
+
+/* Form */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-grid.three{grid-template-columns:2fr 1fr 1fr;}
+.form-grid.full{grid-template-columns:1fr;}
+@media(max-width:480px){.form-grid,.form-grid.three{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;}
+.field input,.field select{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.88rem;font-family:'Manrope',sans-serif;color:#1e293b;outline:none;transition:all 0.15s;width:100%;}
+.field input:focus,.field select:focus{border-color:#0a0a0a;background:#fff;box-shadow:0 0 0 3px rgba(0,0,0,0.08);}
+.field input::placeholder{color:#94a3b8;}
+.field select{color:#1e293b;cursor:pointer;}
+.field-note{font-size:0.72rem;color:#94a3b8;margin-top:2px;}
+
+/* Shipping options */
+.shipping-options{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.ship-opt{border:1.5px solid #e2e8f0;border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s;}
+.ship-opt:hover{border-color:#9ca3af;}
+.ship-opt.selected{border-color:#0a0a0a;background:#f3f4f6;}
+.ship-opt input[type=radio]{accent-color:#0a0a0a;width:16px;height:16px;cursor:pointer;flex-shrink:0;}
+.ship-opt-info{flex:1;}
+.ship-opt-name{font-weight:700;font-size:0.88rem;color:#1e293b;}
+.ship-opt-eta{font-size:0.75rem;color:#64748b;margin-top:1px;}
+.ship-opt-price{font-weight:700;font-size:0.92rem;color:#0a0a0a;flex-shrink:0;}
+.ship-calculating{font-size:0.85rem;color:#94a3b8;padding:12px 0;display:flex;align-items:center;gap:8px;}
+.spin{width:16px;height:16px;border:2px solid #e2e8f0;border-top-color:#0a0a0a;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ship-enter-address{font-size:0.82rem;color:#94a3b8;padding:10px 0;}
+
+/* Payment */
+.payment-methods{display:flex;gap:8px;margin-bottom:16px;}
+.pay-method{flex:1;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s;font-size:0.82rem;font-weight:600;color:#475569;gap:6px;}
+.pay-method:hover{border-color:#9ca3af;}
+.pay-method.selected{border-color:#0a0a0a;background:#f3f4f6;color:#0a0a0a;}
+.pay-notice{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;font-size:0.78rem;color:#64748b;display:flex;align-items:center;gap:8px;margin-top:12px;}
+.pay-notice svg{flex-shrink:0;color:#22c55e;}
+
+/* Order Summary */
+.order-items{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.order-item{display:flex;gap:12px;align-items:center;}
+.order-item-img{width:52px;height:52px;border-radius:8px;background:#f1f5f9;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;}
+.order-item-img img{width:100%;height:100%;object-fit:cover;}
+.item-qty-badge{position:absolute;top:-4px;right:-4px;background:#0a0a0a;color:#fff;border-radius:50%;width:18px;height:18px;font-size:0.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.order-item-info{flex:1;min-width:0;}
+.order-item-name{font-size:0.85rem;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.order-item-sub{font-size:0.72rem;color:#94a3b8;margin-top:1px;}
+.order-item-price{font-weight:700;font-size:0.88rem;color:#1e293b;flex-shrink:0;}
+.qty-stepper{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.qty-stepper button{width:26px;height:26px;border-radius:50%;border:1.5px solid #e2e8f0;background:#fff;cursor:pointer;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;color:#475569;transition:border-color .15s,background .15s,color .15s;}
+.qty-stepper button:hover{border-color:#0a0a0a;color:#0a0a0a;background:#f3f4f6;}
+.qty-stepper button.qty-minus:hover{border-color:#ef4444;color:#ef4444;background:#fef2f2;}
+.qty-stepper .qty-val{font-size:0.88rem;font-weight:700;color:#1e293b;min-width:16px;text-align:center;}
+
+/* Pricing breakdown */
+.price-breakdown{border-top:1px solid #f1f5f9;padding-top:14px;display:flex;flex-direction:column;gap:8px;}
+.price-row{display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;}
+.price-row span:first-child{color:#64748b;}
+.price-row span:last-child{font-weight:600;color:#1e293b;}
+.price-row.gst span:last-child{color:#64748b;font-weight:500;}
+.price-row.shipping span:last-child{color:#22c55e;}
+.price-row.total{border-top:1.5px solid #e2e8f0;padding-top:10px;margin-top:2px;}
+.price-row.total span:first-child{font-weight:700;font-size:0.95rem;color:#1e293b;}
+.price-row.total span:last-child{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:800;color:#0a0a0a;}
+.gst-note{font-size:0.72rem;color:#94a3b8;text-align:right;margin-top:4px;}
+
+/* Promo code */
+.promo-row{display:flex;gap:8px;margin-top:14px;}
+.promo-row input{flex:1;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:9px 12px;font-size:0.82rem;font-family:'Manrope',sans-serif;outline:none;transition:border-color 0.15s;}
+.promo-row input:focus{border-color:#0a0a0a;}
+.promo-btn{background:#0a0a0a;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:0.82rem;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Manrope',sans-serif;transition:background 0.15s;}
+.promo-btn:hover{background:#1a1a1a;}
+
+/* CTA */
+.checkout-btn{width:100%;background:#0a0a0a;color:#fff;border:none;border-radius:10px;padding:15px;font-size:0.95rem;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.15s;margin-top:16px;}
+.checkout-btn:hover{background:#1a1a1a;transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,0.25);}
+.checkout-btn:disabled{background:#9ca3af;cursor:not-allowed;transform:none;box-shadow:none;}
+.secure-note{display:flex;align-items:center;justify-content:center;gap:6px;font-size:0.72rem;color:#94a3b8;margin-top:10px;}
+
+/* Empty cart */
+.empty-cart{text-align:center;padding:48px 24px;}
+.empty-cart h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:#1e293b;margin-bottom:8px;}
+.empty-cart p{font-size:0.88rem;color:#64748b;margin-bottom:20px;}
+.empty-cart a{display:inline-flex;align-items:center;gap:6px;background:#0a0a0a;color:#fff;padding:10px 20px;border-radius:8px;font-weight:600;font-size:0.85rem;}
+
+/* Trust badges */
+.trust-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+.trust-badge{display:flex;align-items:center;gap:5px;font-size:0.72rem;color:#64748b;font-weight:500;}
+.trust-badge svg{flex-shrink:0;color:#22c55e;}
+
+/* Toast */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(10px);z-index:999;pointer-events:none;opacity:0;transition:all 0.3s;}
+#toast.visible{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast-inner{background:#1e293b;color:#fff;padding:10px 18px;border-radius:8px;font-size:0.82rem;font-weight:500;display:flex;align-items:center;gap:8px;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+.toast-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 1C5.24 1 3 3.24 3 6C3 9.5 8 15 8 15C8 15 13 9.5 13 6C13 3.24 10.76 1 8 1Z" fill="#0a0a0a"/>
+          <circle cx="8" cy="6" r="2" fill="white"/>
+        </svg>
+      </div>
+      Vi2ionai
+    </a>
+    <a href="index.html" class="nav-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to shop
+    </a>
+    <a href="landing-page.php" class="nav-demo">Request a Demo</a>
+  </div>
+</nav>
+
+<!-- Steps -->
+<div class="steps-bar">
+  <div class="steps-inner">
+    <div class="step done" id="step1"><div class="step-num">&#10003;</div><span>Cart</span></div>
+    <div class="step-sep"></div>
+    <div class="step active" id="step2"><div class="step-num">2</div><span>Details</span></div>
+    <div class="step-sep"></div>
+    <div class="step" id="step3"><div class="step-num">3</div><span>Shipping</span></div>
+    <div class="step-sep"></div>
+    <div class="step" id="step4"><div class="step-num">4</div><span>Payment</span></div>
+  </div>
+</div>
+
+<div class="checkout-wrap" id="checkout-content">
+  <div style="grid-column:1/-1;text-align:center;padding:60px;color:#94a3b8;">
+    <div class="spin" style="margin:0 auto 12px;width:32px;height:32px;border-width:3px;"></div>
+    <p>Loading your cart&hellip;</p>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"><div class="toast-inner"><div class="toast-dot"></div><span id="toast-msg"></span></div></div>
+
+<script>
+// Load cart and products from localStorage (written by index.html)
+let cart = [];
+let PRODUCTS = [];
+
+try { cart = JSON.parse(localStorage.getItem('vi2_cart') || '[]'); } catch(e) { cart = []; }
+try { PRODUCTS = JSON.parse(localStorage.getItem('vi2_products') || '[]'); } catch(e) { PRODUCTS = []; }
+
+// Fallback products if localStorage is empty
+if (!PRODUCTS.length) {
+  PRODUCTS = [
+    { id: "hardwired-gps-tracker",  name: "Hardwired GPS Tracker",   price: 250, category: "GPS Tracking",   stripeLink: "https://buy.stripe.com/8x2aEXfEObAHc1bf2Z7Zu00" },
+    { id: "obd-plug-play-tracker",  name: "OBD Plug & Play Tracker", price: 149, category: "GPS Tracking",   stripeLink: "" },
+    { id: "connected-dash-cam",     name: "Connected Dash Cam",      price: 399, category: "Safety & Vision", stripeLink: "" }
+  ];
+}
+
+function slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+// Resolve product to the exact PRICE_TABLE key used by stripe_checkout.php.
+const PRICE_TO_ID = { 250: 'hardwired-gps-tracker', 149: 'obd-plug-play-tracker', 399: 'connected-dash-cam' };
+const VALID_IDS   = new Set(Object.values(PRICE_TO_ID));
+
+// Name-slug variants that all map to the same PRICE_TABLE key
+const SLUG_TO_ID = {
+  'hardwired-gps-tracker': 'hardwired-gps-tracker',
+  'hardwired-gps':         'hardwired-gps-tracker',
+  'gps-tracker':           'hardwired-gps-tracker',
+  'obd-plug-play-tracker': 'obd-plug-play-tracker',
+  'obd-plug-play':         'obd-plug-play-tracker',
+  'obd-tracker':           'obd-plug-play-tracker',
+  'connected-dash-cam':    'connected-dash-cam',
+  'connected-dashcam':     'connected-dash-cam',
+  'dash-cam':              'connected-dash-cam',
+  'dashcam':               'connected-dash-cam',
+};
+
+function resolveProductId(p) {
+  if (!p) return '';
+  if (p.id && VALID_IDS.has(p.id))   return p.id;                   // explicit id
+  if (PRICE_TO_ID[p.price])          return PRICE_TO_ID[p.price];   // match by price
+  const slug = slugify(p.name ?? '');
+  return SLUG_TO_ID[slug] || slug;                                   // name fallback
+}
+
+function buildItemsHTML() {
+  return cart.map(item => {
+    const p = PRODUCTS[item.idx];
+    if (!p) return '';
+    return `
+    <div class="order-item">
+      <div class="order-item-img">
+        <svg viewBox="0 0 40 40" width="40" height="40"><rect width="40" height="40" fill="#f3f4f6" rx="6"/><circle cx="20" cy="20" r="8" fill="#0a0a0a" opacity="0.12"/><circle cx="20" cy="20" r="4" fill="#0a0a0a"/></svg>
+        <div class="item-qty-badge">${item.qty}</div>
+      </div>
+      <div class="order-item-info">
+        <div class="order-item-name">${p.name}</div>
+        <div class="order-item-sub">${p.category} &middot; ${fmt(p.price)} each</div>
+      </div>
+      <div class="order-item-price">${fmt(p.price * item.qty)}</div>
+      <div class="qty-stepper">
+        <button class="qty-minus" onclick="changeQty(${item.idx}, -1)" title="${item.qty === 1 ? 'Remove item' : 'Decrease quantity'}">${item.qty === 1 ? '&times;' : '&minus;'}</button>
+        <span class="qty-val">${item.qty}</span>
+        <button onclick="changeQty(${item.idx}, 1)" title="Increase quantity">+</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function changeQty(idx, delta) {
+  const item = cart.find(i => i.idx === idx);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) {
+    cart = cart.filter(i => i.idx !== idx);
+  }
+  localStorage.setItem('vi2_cart', JSON.stringify(cart));
+  renderCart();
+}
+
+function renderCart() {
+  if (!cart.length) {
+    // Cart is now empty — go back to empty-cart view
+    renderPage();
+    return;
+  }
+  const subtotal = calcSubtotal();
+  const gst = subtotal * 0.10;
+  const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+
+  const container = document.getElementById('order-items-container');
+  if (container) container.innerHTML = buildItemsHTML();
+
+  const countEl = document.getElementById('order-item-count');
+  if (countEl) countEl.textContent = `${totalQty} item${totalQty !== 1 ? 's' : ''}`;
+
+  const subEl = document.getElementById('sum-subtotal');
+  if (subEl) subEl.textContent = fmt(subtotal);
+
+  const gstEl = document.getElementById('sum-gst');
+  if (gstEl) gstEl.textContent = fmt(gst);
+
+  const totEl = document.getElementById('sum-total');
+  if (totEl) totEl.textContent = fmt(subtotal + gst);
+
+  // Reset shipping selection since cart changed
+  selectedShipping = null;
+  const shipEl = document.getElementById('sum-shipping');
+  if (shipEl) { shipEl.textContent = '—'; shipEl.style.color = '#94a3b8'; }
+
+  const checkoutBtn = document.getElementById('checkout-btn');
+  if (checkoutBtn) checkoutBtn.disabled = true;
+}
+
+// Shipping rates
+const SHIPPING = {
+  free_threshold: 500,
+  rates: {
+    NSW: { standard: { price: 10, eta: "2-4 business days" }, express: { price: 18, eta: "Next business day" } },
+    VIC: { standard: { price: 12, eta: "3-5 business days" }, express: { price: 22, eta: "1-2 business days" } },
+    QLD: { standard: { price: 12, eta: "3-5 business days" }, express: { price: 22, eta: "1-2 business days" } },
+    SA:  { standard: { price: 14, eta: "4-6 business days" }, express: { price: 24, eta: "2-3 business days" } },
+    WA:  { standard: { price: 16, eta: "5-8 business days" }, express: { price: 28, eta: "3-4 business days" } },
+    TAS: { standard: { price: 14, eta: "4-6 business days" }, express: { price: 24, eta: "2-3 business days" } },
+    NT:  { standard: { price: 16, eta: "6-9 business days" }, express: { price: 30, eta: "3-5 business days" } },
+    ACT: { standard: { price: 10, eta: "2-4 business days" }, express: { price: 18, eta: "Next business day" } }
+  }
+};
+
+let selectedShipping = null;
+let selectedPayment = 'stripe';
+
+function calcSubtotal() {
+  return cart.reduce((s, item) => {
+    const p = PRODUCTS[item.idx];
+    return s + (p ? p.price * item.qty : 0);
+  }, 0);
+}
+function fmt(n) { return '$' + n.toFixed(2); }
+
+function getShippingOptions(state) {
+  const sub = calcSubtotal();
+  if (sub >= SHIPPING.free_threshold) return [{ id: 'free', name: 'Free Shipping', eta: '3-7 business days', price: 0 }];
+  const rates = SHIPPING.rates[state.toUpperCase()];
+  if (!rates) return null;
+  return [
+    { id: 'standard', name: 'Standard Shipping', eta: rates.standard.eta, price: rates.standard.price },
+    { id: 'express',  name: 'Express Shipping',  eta: rates.express.eta,  price: rates.express.price }
+  ];
+}
+
+function updateSummary() {
+  const sub  = calcSubtotal();
+  const gst  = sub * 0.10;
+  const ship = selectedShipping ? selectedShipping.price : null;
+  const total = sub + gst + (ship || 0);
+
+  document.getElementById('sum-subtotal').textContent = fmt(sub);
+  document.getElementById('sum-gst').textContent = fmt(gst);
+  const shipEl = document.getElementById('sum-shipping');
+  if (ship === null) { shipEl.textContent = '—'; shipEl.style.color = '#94a3b8'; }
+  else if (ship === 0) { shipEl.textContent = 'FREE'; shipEl.style.color = '#22c55e'; }
+  else { shipEl.textContent = fmt(ship); shipEl.style.color = '#22c55e'; }
+  document.getElementById('sum-total').textContent = fmt(ship !== null ? total : sub + gst);
+  document.getElementById('checkout-btn').disabled = !selectedShipping;
+}
+
+function renderShippingOptions(opts) {
+  const container = document.getElementById('shipping-options');
+  if (!opts || !opts.length) {
+    container.innerHTML = '<div class="ship-enter-address">Unable to calculate shipping. Please contact us on 0422 55 7927.</div>';
+    return;
+  }
+  selectedShipping = opts[0];
+  updateSummary();
+  container.innerHTML = opts.map((opt, i) => `
+    <label class="ship-opt ${i === 0 ? 'selected' : ''}" onclick="selectShipping(this, ${JSON.stringify(opt).replace(/"/g, '&quot;')})">
+      <input type="radio" name="shipping" ${i === 0 ? 'checked' : ''}/>
+      <div class="ship-opt-info">
+        <div class="ship-opt-name">${opt.name}</div>
+        <div class="ship-opt-eta">${opt.eta}</div>
+      </div>
+      <div class="ship-opt-price">${opt.price === 0 ? 'FREE' : fmt(opt.price)}</div>
+    </label>`).join('');
+}
+
+function selectShipping(el, opt) {
+  document.querySelectorAll('.ship-opt').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedShipping = opt;
+  updateSummary();
+}
+
+function onStateChange() {
+  const state = document.getElementById('field-state').value;
+  if (!state) return;
+  document.getElementById('step3').classList.add('active');
+  const container = document.getElementById('shipping-options');
+  container.innerHTML = '<div class="ship-calculating"><div class="spin"></div> Calculating shipping&hellip;</div>';
+  fetchShipping(state);
+}
+
+async function fetchShipping(state) {
+  const totalWeight = Math.max(0.1, cart.reduce((s, i) => s + (i.qty * 0.5), 0));
+  const postcode = document.getElementById('field-postcode').value.trim();
+  try {
+    const res = await fetch('auspost.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from_postcode: '2067', to_postcode: postcode || '2000', weight: totalWeight, length: 20, width: 15, height: 10 })
+    });
+    const data = await res.json();
+    if (data.postage_result) {
+      const opts = Array.isArray(data.postage_result) ? data.postage_result : [data.postage_result];
+      renderShippingOptions(opts.map(o => ({ id: o.service_code || o.name, name: o.name, eta: o.description || '3-7 business days', price: parseFloat(o.total_cost) })));
+      return;
+    }
+  } catch(e) {}
+  // Fallback to local rates
+  renderShippingOptions(getShippingOptions(state));
+}
+
+function selectPayment(method) {
+  selectedPayment = method;
+  document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+  document.querySelectorAll(`.pay-method[data-method="${method}"]`).forEach(m => m.classList.add('selected'));
+}
+
+async function handleCheckout() {
+  const required = ['field-firstname','field-lastname','field-email','field-address','field-suburb','field-state','field-postcode'];
+  for (const id of required) {
+    if (!document.getElementById(id).value.trim()) {
+      showToast('Please fill in all required fields');
+      document.getElementById(id).focus();
+      return;
+    }
+  }
+  if (!selectedShipping) { showToast('Please select a shipping method'); return; }
+  document.getElementById('step4').classList.add('active');
+
+  const items = cart.map(item => ({
+    id:  resolveProductId(PRODUCTS[item.idx] ?? {}),
+    qty: item.qty
+  })).filter(item => item.id !== '');
+
+  if (!items.length) { showToast('Your cart appears to be empty.'); return; }
+
+  const payload = {
+    items,
+    shipping_amount: Math.round(selectedShipping.price * 100),
+    shipping_label:  selectedShipping.name ?? 'Shipping',
+    email:           document.getElementById('field-email').value.trim()
+  };
+
+  const btn = document.getElementById('checkout-btn');
+  btn.disabled = true;
+  btn.textContent = 'Processing…';
+
+  try {
+    const res  = await fetch('stripe_checkout.php', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok || !data.url) throw new Error(data.error || 'Payment setup failed. Please try again.');
+    window.location.href = data.url;
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Proceed to Payment';
+    showToast(err.message || 'Something went wrong. Please try again.');
+  }
+}
+
+let toastTimer;
+function showToast(msg) {
+  clearTimeout(toastTimer);
+  document.getElementById('toast-msg').textContent = msg;
+  document.getElementById('toast').classList.add('visible');
+  toastTimer = setTimeout(() => document.getElementById('toast').classList.remove('visible'), 3000);
+}
+
+function renderPage() {
+  const wrap = document.getElementById('checkout-content');
+  if (!cart.length) {
+    wrap.innerHTML = `
+      <div class="empty-cart" style="grid-column:1/-1">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5" style="margin:0 auto 16px;display:block"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <h2>Your cart is empty</h2>
+        <p>Add some products before checking out.</p>
+        <a href="index.html">&larr; Back to shop</a>
+      </div>`;
+    return;
+  }
+
+  const subtotal = calcSubtotal();
+  const gst = subtotal * 0.10;
+  const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+
+  const itemsHTML = buildItemsHTML();
+
+  wrap.innerHTML = `
+  <!-- LEFT: Form -->
+  <div>
+    <div class="card">
+      <div class="card-header"><div class="card-num">1</div><h2>Contact Information</h2></div>
+      <div class="card-body">
+        <div class="form-grid">
+          <div class="field"><label>First Name *</label><input id="field-firstname" type="text" placeholder="Sarah"/></div>
+          <div class="field"><label>Last Name *</label><input id="field-lastname" type="text" placeholder="Thompson"/></div>
+        </div>
+        <div class="form-grid full" style="margin-top:14px">
+          <div class="field"><label>Email Address *</label><input id="field-email" type="email" placeholder="sarah@company.com.au"/><span class="field-note">Order confirmation will be sent here</span></div>
+        </div>
+        <div class="form-grid full" style="margin-top:14px">
+          <div class="field"><label>Phone</label><input id="field-phone" type="tel" placeholder="0400 000 000"/></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-num">2</div><h2>Shipping Address</h2></div>
+      <div class="card-body">
+        <div class="form-grid full">
+          <div class="field"><label>Address *</label><input id="field-address" type="text" placeholder="123 Fleet Street"/></div>
+        </div>
+        <div class="form-grid full" style="margin-top:14px">
+          <div class="field"><label>Address Line 2</label><input id="field-address2" type="text" placeholder="Unit, Suite, Floor (optional)"/></div>
+        </div>
+        <div class="form-grid three" style="margin-top:14px">
+          <div class="field"><label>Suburb *</label><input id="field-suburb" type="text" placeholder="Sydney"/></div>
+          <div class="field">
+            <label>State *</label>
+            <select id="field-state" onchange="onStateChange()">
+              <option value="">Select</option>
+              <option>NSW</option><option>VIC</option><option>QLD</option>
+              <option>SA</option><option>WA</option><option>TAS</option>
+              <option>NT</option><option>ACT</option>
+            </select>
+          </div>
+          <div class="field"><label>Postcode *</label><input id="field-postcode" type="text" placeholder="2000" maxlength="4"/></div>
+        </div>
+        <div class="form-grid full" style="margin-top:14px">
+          <div class="field"><label>Country</label><select><option>Australia</option></select></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-num">3</div><h2>Shipping Method</h2></div>
+      <div class="card-body">
+        <div id="shipping-options">
+          <div class="ship-enter-address">Select your state above to see shipping options</div>
+        </div>
+        ${subtotal >= SHIPPING.free_threshold
+          ? '<div style="font-size:0.82rem;color:#22c55e;font-weight:600;margin-top:8px;">&#127881; Your order qualifies for free shipping!</div>'
+          : `<div style="font-size:0.75rem;color:#94a3b8;margin-top:8px;">Free shipping on orders over $${SHIPPING.free_threshold}</div>`}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-num">4</div><h2>Payment</h2></div>
+      <div class="card-body">
+        <div class="payment-methods">
+          <div class="pay-method selected" data-method="stripe" onclick="selectPayment('stripe')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Credit Card
+          </div>
+          <div class="pay-method" data-method="paypal" onclick="selectPayment('paypal')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11C7 11 6 17 10 17H16C18 17 19.5 14.5 19 12C18.5 9.5 16 8 14 8H8C6 8 5 9 5 11"/><path d="M5 15C5 15 4 21 8 21H14C16 21 17.5 18.5 17 16"/></svg>
+            PayPal
+          </div>
+        </div>
+        <div class="pay-notice">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          You'll be securely redirected to complete payment. Your card details are never stored on our servers.
+        </div>
+        <div class="trust-row">
+          <div class="trust-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Secured by Stripe</div>
+          <div class="trust-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 30-day returns</div>
+          <div class="trust-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Tax invoice issued</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Order Summary -->
+  <div class="order-summary">
+    <div class="card">
+      <div class="card-header"><h2>Order Summary</h2><span id="order-item-count" style="font-size:0.78rem;color:#94a3b8;margin-left:auto">${totalQty} item${totalQty !== 1 ? 's' : ''}</span></div>
+      <div class="card-body">
+        <div class="order-items" id="order-items-container">${itemsHTML}</div>
+        <div class="price-breakdown">
+          <div class="price-row"><span>Subtotal (excl. GST)</span><span id="sum-subtotal">${fmt(subtotal)}</span></div>
+          <div class="price-row gst"><span>GST (10%)</span><span id="sum-gst">${fmt(gst)}</span></div>
+          <div class="price-row shipping"><span>Shipping</span><span id="sum-shipping" style="color:#94a3b8">&mdash;</span></div>
+          <div class="price-row total"><span>Total</span><span id="sum-total">${fmt(subtotal + gst)}</span></div>
+        </div>
+        <div class="gst-note">Select shipping above to see final total</div>
+        <div class="promo-row">
+          <input type="text" placeholder="Promo code"/>
+          <button class="promo-btn" onclick="showToast('Promo code applied!')">Apply</button>
+        </div>
+        <button class="checkout-btn" id="checkout-btn" disabled onclick="handleCheckout()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Proceed to Payment
+        </button>
+        <div class="secure-note">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          SSL encrypted &middot; Safe checkout
+        </div>
+      </div>
+    </div>
+    <div style="font-size:0.75rem;color:#94a3b8;text-align:center;padding:0 8px;">
+      By placing your order you agree to our <a href="terms.html" style="color:#0a0a0a;text-decoration:underline">Terms &amp; Conditions</a>. A tax invoice will be emailed after purchase.
+    </div>
+    <div style="text-align:center;margin-top:12px;">
+      <a href="index.html" style="font-size:0.82rem;color:#4b5563;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Continue Shopping
+      </a>
+    </div>
+  </div>`;
+}
+
+renderPage();
+</script>
+</body>
+</html>
