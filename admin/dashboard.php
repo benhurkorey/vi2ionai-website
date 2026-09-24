@@ -263,6 +263,10 @@ if (!$flash && isset($_GET['mm'])) {
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
     Add Product
   </a>
+  <a class="nav-item" href="/admin/kore-sms.php">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M8 10h8M8 14h5"/></svg>
+    KORE SMS Replies
+  </a>
   <a class="nav-item" href="/admin/enquiries.php">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
     Enquiries <span style="background:#000;color:#fff;border-radius:10px;padding:1px 7px;font-size:.7rem;margin-left:4px"><?= (int)$newEnquiries ?></span>

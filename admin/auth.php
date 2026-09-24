@@ -34,6 +34,26 @@ function requireAdmin(): void {
     $_SESSION['admin_expires'] = time() + SESSION_LIFETIME;
 }
 
+/**
+ * Same as requireAdmin(), but for JSON/fetch API endpoints: returns a clean
+ * 401 JSON body instead of an HTTP redirect, so client-side fetch() code
+ * gets an actionable error instead of failing to parse a redirected HTML page.
+ */
+function requireAdminJson(): void {
+    initAdminSession();
+    $expired = empty($_SESSION['admin_user']) || empty($_SESSION['admin_expires']) || $_SESSION['admin_expires'] < time();
+    if ($expired) {
+        if (!empty($_SESSION['admin_expires']) && $_SESSION['admin_expires'] < time()) {
+            session_destroy();
+        }
+        http_response_code(401);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['error' => 'Your admin session has expired. Please refresh the page and log in again.']);
+        exit;
+    }
+    $_SESSION['admin_expires'] = time() + SESSION_LIFETIME;
+}
+
 function generateCsrf(): string {
     initAdminSession();
     if (empty($_SESSION[CSRF_TOKEN_NAME])) {

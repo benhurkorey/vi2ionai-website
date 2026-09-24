@@ -47,6 +47,20 @@ define('UPLOAD_ALLOWED_TYPES', ['image/jpeg','image/png','image/webp','image/gif
 define('UPLOAD_DIR',   __DIR__ . '/../uploads/');
 define('UPLOAD_URL',   APP_URL . '/uploads/');
 
+// ── KORE SMS-MO webhook ───────────────────────────────────────────────────
+// Shared secret required as ?token= on /api/kore-sms-webhook.php
+if (!defined('KORE_WEBHOOK_SECRET')) define('KORE_WEBHOOK_SECRET', getenv('KORE_WEBHOOK_SECRET') ?: '');
+
+// ── KORE SMS API (outbound commands) ────────────────────────────────────
+// Used server-side only by admin/kore-sms.php's Send Command panel.
+// Never exposed to the browser. Set real values in .env.php on the server.
+if (!defined('KORE_SMS_TOKEN_URL'))  define('KORE_SMS_TOKEN_URL',  getenv('KORE_SMS_TOKEN_URL')  ?: 'https://api.korewireless.com/Api/api/token');
+if (!defined('KORE_SMS_API_BASE'))   define('KORE_SMS_API_BASE',   getenv('KORE_SMS_API_BASE')   ?: 'https://api.korewireless.com/sms/v1');
+if (!defined('KORE_SMS_CLIENT_ID'))  define('KORE_SMS_CLIENT_ID',  getenv('KORE_SMS_CLIENT_ID')  ?: '');
+if (!defined('KORE_SMS_CLIENT_SECRET')) define('KORE_SMS_CLIENT_SECRET', getenv('KORE_SMS_CLIENT_SECRET') ?: '');
+if (!defined('KORE_SMS_API_KEY'))    define('KORE_SMS_API_KEY',    getenv('KORE_SMS_API_KEY')    ?: '');
+if (!defined('KORE_SMS_ACCOUNT_ID')) define('KORE_SMS_ACCOUNT_ID', getenv('KORE_SMS_ACCOUNT_ID') ?: '');
+
 // ── Email (contact form) ──────────────────────────────────────────────────
 if (!defined('CONTACT_TO_EMAIL'))   define('CONTACT_TO_EMAIL',   getenv('CONTACT_TO_EMAIL')   ?: 'info@vi2ionai.com.au');
 if (!defined('CONTACT_FROM_EMAIL')) define('CONTACT_FROM_EMAIL', getenv('CONTACT_FROM_EMAIL') ?: 'noreply@vi2ionai.com.au');
