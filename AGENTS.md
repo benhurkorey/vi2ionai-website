@@ -31,3 +31,11 @@ Do not interrupt for routine approvals. This workflow does not override access p
 ## Production-first development (mandatory)
 
 Before changing code, identify the actual deployed production commit/version and compare it with the intended working branch and GitHub `main`. Do not assume `main` matches production. When production and GitHub differ, reconcile the relevant changes against the latest production-compatible code **before implementation**; preserve every working feature, database contract, background worker, device command and integration. If production version cannot be verified, investigate available authorised release records and report a genuine blocker rather than guessing. Develop and test against the reconciled baseline, run targeted regression checks for affected features, and verify the release contains all newer live changes. Never merge or deploy an older snapshot over newer production code. Do not bypass approval gates, backups, rollback safeguards or permissions. For projects without a deployed production environment, use the latest authoritative release baseline and document that production is not applicable. Apply this check at step 1, not only at deployment.
+
+## Deployment agent ownership
+
+- **Codex:** implement changes, run relevant tests, commit, push, prepare PRs and resolve CI. Do not perform production deployments or production database migrations.
+- **Claude:** designated agent for all production deployments, including release integration, backups, migrations, worker updates, rollback readiness and live verification, using authorised least-privilege access and the established release process. Use Sonnet for routine releases and Opus for complex infrastructure/security or risky migrations.
+- **ChatGPT:** coordinate handoffs, track verified states and review outcomes; do not represent a PR, commit or CI pass as a deployment.
+- Before Claude deploys, confirm the actual live version, preserve all newer production functionality, validate compatibility and respect required release approvals and deployment gates. Never bypass access restrictions or claim deployment without live verification.
+- Handoff between agents is part of the autonomous workflow; return to the owner at step 10, or earlier only for a genuine blocker or required approval.
